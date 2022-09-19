@@ -1,5 +1,6 @@
 import { signInWithPopup, User } from "firebase/auth";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { createUser } from "./db";
 import { auth, googleAuthProvider } from "./firebase";
 
 interface IAuthContext {
@@ -29,6 +30,7 @@ function useProvideAuth() {
     if (rawUser) {
       const user = formatUser(rawUser);
       setLoading(false);
+      createUser(user.uid, user);
       setUser(user);
     } else {
       setLoading(false);
