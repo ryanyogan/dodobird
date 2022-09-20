@@ -1,5 +1,7 @@
 import { Box, Code, Switch } from "@chakra-ui/react";
 import { useAuth } from "lib/auth";
+import { updateFeedback } from "lib/db";
+import { mutate } from "swr";
 import { FeedbackData } from "utils/types";
 import DeleteFeedbackButton from "./DeleteFeedbackButton";
 import { Td } from "./Table";
@@ -11,6 +13,12 @@ export default function FeedbackRow({
   status,
 }: FeedbackData) {
   const auth = useAuth();
+  const isChecked = status === "active";
+
+  const toggleFeedback = async () => {
+    await updateFeedback(id, { status: isChecked ? "pending" : "active" });
+    mutate(["/api/feedback", auth.user.token]);
+  };
 
   return (
     <Box as="tr" key={id}>
@@ -28,7 +36,11 @@ export default function FeedbackRow({
         </Code>
       </Td>
       <Td>
-        <Switch colorScheme="green" />
+        <Switch
+          colorScheme="green"
+          onChange={toggleFeedback}
+          isChecked={isChecked}
+        />
       </Td>
       <Td>
         <DeleteFeedbackButton feedbackId={id} />
