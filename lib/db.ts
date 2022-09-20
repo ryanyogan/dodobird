@@ -38,3 +38,11 @@ export async function deleteFeedback(id: string) {
   const docRef = doc(firestore, "feedback", id);
   return deleteDoc(docRef);
 }
+
+export async function updateFeedback(
+  id: string,
+  newValues: Partial<FeedbackData>
+) {
+  const docRef = doc(firestore, "feedback", id);
+  return updateDoc(docRef, newValues);
+}
