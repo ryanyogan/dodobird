@@ -34,21 +34,30 @@ export default function DashboardShell({
               <Link mr={8}>Icon</Link>
             </NextLink>
             <NextLink href="/sites" passHref>
-              <Link mr={4}>Sites</Link>
+              <Button as="a" color="gray.800" fontWeight="bold" variant="ghost">
+                Sites
+              </Button>
             </NextLink>
             <NextLink href="/feedback" passHref>
-              <Link>Feedback</Link>
+              <Button
+                as="a"
+                color="gray.800"
+                fontWeight="bold"
+                variant="ghost"
+                mr={4}
+              >
+                Feedback
+              </Button>
             </NextLink>
           </Flex>
           <Flex justifyContent="center" alignItems="center">
-            {user && (
+            {user ? (
               <NextLink href="/account" passHref>
-                <Button as="a" variant="ghost" mr={2}>
-                  Account
-                </Button>
+                <Avatar as="a" size="sm" src={user.photoURL} />
               </NextLink>
+            ) : (
+              <Avatar size="sm" />
             )}
-            <Avatar size="sm" src={user?.photoURL} />
           </Flex>
         </Flex>
       </Flex>

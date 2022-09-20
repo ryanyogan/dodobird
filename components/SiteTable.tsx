@@ -34,7 +34,8 @@ export default function SiteTable({ sites }) {
                   </Link>
                 </NextLink>
               </Td>
-              <Td>{format(parseISO(site.createdAt), "PPpp")}</Td>
+              <Td>{format(parseISO(site.createdAt), "MMM do, yyyy")}</Td>
+              <Td>x</Td>
             </Box>
           ))}
         </tbody>
