@@ -43,7 +43,11 @@ export async function getAllFeedback(
 ): Promise<{ feedback: FeedbackData[]; error: Error }> {
   try {
     let feedback = [];
-    const q = query(feedbackRef, where("siteId", "==", siteId));
+    const q = query(
+      feedbackRef,
+      where("siteId", "==", siteId),
+      where("status", "==", "active")
+    );
     const snap = await getDocs(q);
 
     snap.forEach((doc) => {
