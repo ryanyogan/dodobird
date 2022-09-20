@@ -1,4 +1,11 @@
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { FeedbackData, Site } from "utils/types";
 import { FormattedUser } from "./auth";
 import { firestore } from "./firebase";
@@ -25,4 +32,9 @@ export async function createFeedback(data: Omit<FeedbackData, "id">) {
 
 export async function createSite(data: Omit<Site, "id">) {
   return addDoc(siteRef, data);
+}
+
+export async function deleteFeedback(id: string) {
+  const docRef = doc(firestore, "feedback", id);
+  return deleteDoc(docRef);
 }

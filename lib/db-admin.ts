@@ -55,3 +55,21 @@ export async function getAllFeedback(
     return { error, feedback: null };
   }
 }
+
+export async function getAllFeedbackForSites(uid: string) {
+  const { sites } = await getUserSites(uid);
+  if (!sites.length) {
+    return { feedback: [] };
+  }
+
+  const siteIds = sites.map((site) => site.id);
+  const q = query(feedbackRef, where("siteId", "in", siteIds));
+  const snap = await getDocs(q);
+
+  const feedback: FeedbackData[] = [];
+  snap.forEach((doc: any) => {
+    feedback.push({ id: doc.id, ...doc.data() });
+  });
+
+  return { feedback };
+}
