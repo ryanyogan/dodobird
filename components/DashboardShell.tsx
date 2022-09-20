@@ -1,15 +1,6 @@
-import {
-  Avatar,
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Button,
-  Flex,
-  Heading,
-  Link,
-} from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Link } from "@chakra-ui/react";
 import { useAuth } from "lib/auth";
+import NextLink from "next/link";
 import React from "react";
 
 export default function DashboardShell({
@@ -21,7 +12,12 @@ export default function DashboardShell({
 
   return (
     <Box backgroundColor="gray.100" h="100vh">
-      <Flex backgroundColor="white" mb={16} w="full">
+      <Flex
+        backgroundColor="white"
+        mb={[8, 16]}
+        w="full"
+        borderTop="5px solid #0AF5F4"
+      >
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -31,38 +27,32 @@ export default function DashboardShell({
           margin="0 auto"
           w="full"
           px={8}
+          h="60px"
         >
-          <Flex>
-            <Link mr={4}>Sites</Link>
-            <Link>Feedback</Link>
+          <Flex align="center">
+            <NextLink href="/" passHref>
+              <Link mr={8}>Icon</Link>
+            </NextLink>
+            <NextLink href="/sites" passHref>
+              <Link mr={4}>Sites</Link>
+            </NextLink>
+            <NextLink href="/feedback" passHref>
+              <Link>Feedback</Link>
+            </NextLink>
           </Flex>
           <Flex justifyContent="center" alignItems="center">
-            <Link mr={4}>Account</Link>
+            {user && (
+              <NextLink href="/account" passHref>
+                <Button as="a" variant="ghost" mr={2}>
+                  Account
+                </Button>
+              </NextLink>
+            )}
             <Avatar size="sm" src={user?.photoURL} />
           </Flex>
         </Flex>
       </Flex>
-      <Flex margin="0" direction="column" maxW="1250px" px={8}>
-        <Breadcrumb>
-          <BreadcrumbItem>
-            <BreadcrumbLink>Sites</BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
-        <Flex justifyContent="space-between">
-          <Heading mb={8}>My Sites</Heading>
-          <Button
-            backgroundColor="gray.800"
-            color="white"
-            fontWeight="medium"
-            _hover={{ bg: "gray.700" }}
-            _active={{
-              bg: "gray.800",
-              transform: "scale(0.95)",
-            }}
-          >
-            + Add Site
-          </Button>
-        </Flex>
+      <Flex margin="0" direction="column" maxW="1250px" px={[0, 8, 8]}>
         {children}
       </Flex>
     </Box>
