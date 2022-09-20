@@ -26,11 +26,13 @@ function useProvideAuth() {
   const [user, setUser] = useState<FormattedUser | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const handleUser = (rawUser: User) => {
+  const handleUser = async (rawUser: User) => {
     if (rawUser) {
-      const user = formatUser(rawUser);
+      const user = await formatUser(rawUser);
+      const { token, ...userWithoutToken } = user;
+
       setLoading(false);
-      createUser(user.uid, user);
+      createUser(user.uid, userWithoutToken);
       setUser(user);
     } else {
       setLoading(false);
@@ -70,14 +72,16 @@ export type FormattedUser = {
   name: User["displayName"];
   provider: User["providerData"][number]["providerId"];
   photoURL: User["photoURL"];
+  token: string;
 };
 
-function formatUser(user: User): FormattedUser {
+async function formatUser(user: User): Promise<FormattedUser> {
   return {
     uid: user.uid,
     email: user.email,
     name: user.displayName,
     provider: user.providerData[0].providerId,
     photoURL: user.photoURL,
+    token: await auth.currentUser.getIdToken(),
   };
 }
