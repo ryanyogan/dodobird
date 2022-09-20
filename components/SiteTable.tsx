@@ -1,9 +1,10 @@
 import { Box, Link } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
+import { Site } from "utils/types";
 import { Table, Td, Th, Tr } from "./Table";
 
-export default function SiteTable({ sites }) {
+export default function SiteTable({ sites }: { sites: Site[] }) {
   return (
     <Box overflowX="scroll">
       <Table w="full">

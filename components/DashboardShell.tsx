@@ -34,18 +34,17 @@ export default function DashboardShell({
               <Link mr={8}>Icon</Link>
             </NextLink>
             <NextLink href="/sites" passHref>
-              <Button as="a" color="gray.800" fontWeight="bold" variant="ghost">
+              <Button
+                as="a"
+                color="gray.800"
+                fontWeight="medium"
+                variant="ghost"
+              >
                 Sites
               </Button>
             </NextLink>
             <NextLink href="/feedback" passHref>
-              <Button
-                as="a"
-                color="gray.800"
-                fontWeight="bold"
-                variant="ghost"
-                mr={4}
-              >
+              <Button as="a" fontWeight="medium" variant="ghost" mr={4}>
                 Feedback
               </Button>
             </NextLink>

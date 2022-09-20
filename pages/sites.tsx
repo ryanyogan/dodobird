@@ -6,17 +6,18 @@ import SiteTableSkeleton from "components/SiteTableSkeleton";
 import { useAuth } from "lib/auth";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
+import { Sites } from "utils/types";
 
-export default function Sites() {
+export default function SitesRoute() {
   const { user } = useAuth();
-  const { data } = useSWR(
+  const { data } = useSWR<Sites>(
     user?.token ? ["/api/sites", user?.token] : null,
     fetcher
   );
 
   const sites = data?.sites;
 
-  if (!sites) {
+  if (!data) {
     return (
       <DashboardShell>
         <SiteTableHeader />

@@ -1,12 +1,9 @@
 import DashboardShell from "components/DashboardShell";
 import SiteTableSkeleton from "components/SiteTableSkeleton";
-import useSWR from "swr";
-import fetcher from "utils/fetcher";
 import { useAuth } from "../lib/auth";
 
 export default function Home() {
   const auth = useAuth();
-  const { data } = useSWR("/api/sites", fetcher);
 
   return (
     <DashboardShell>

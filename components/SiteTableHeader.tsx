@@ -6,6 +6,7 @@ import {
   Flex,
   Heading,
 } from "@chakra-ui/react";
+import AddSiteModal from "./AddSiteModal";
 
 export default function SiteTableHeader() {
   return (
@@ -17,19 +18,8 @@ export default function SiteTableHeader() {
       </Breadcrumb>
       <Flex justifyContent="space-between">
         <Heading mb={8}>My Sites</Heading>
+        <AddSiteModal>+ Add Site</AddSiteModal>
       </Flex>
     </Box>
   );
 }
-// <Button
-//   backgroundColor="gray.800"
-//   color="white"
-//   fontWeight="medium"
-//   _hover={{ bg: "gray.700" }}
-//   _active={{
-//     bg: "gray.800",
-//     transform: "scale(0.95)",
-//   }}
-// >
-//   + Add Site
-// </Button>

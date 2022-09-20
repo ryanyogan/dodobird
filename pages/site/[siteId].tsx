@@ -1,10 +1,12 @@
 import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import Feedback from "components/Feedback";
 import { useAuth } from "lib/auth";
-import { createFeedback, getAllFeedback, getAllSites } from "lib/db";
+import { createFeedback } from "lib/db";
+import { getAllFeedback, getAllSites } from "lib/db-admin";
 import { GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import { FeedbackData } from "utils/types";
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const siteId = context.params?.siteId as string;
@@ -37,7 +39,7 @@ export default function FeedbackPage({ initialFeedback }) {
   const auth = useAuth();
   const router = useRouter();
   const inputElement = useRef<HTMLInputElement | null>(null);
-  const [allFeedback, setAllFeedback] = useState([]);
+  const [allFeedback, setAllFeedback] = useState<FeedbackData[]>([]);
 
   useEffect(() => {
     setAllFeedback(initialFeedback);
@@ -46,10 +48,10 @@ export default function FeedbackPage({ initialFeedback }) {
   const onSubmit = (e: any) => {
     e.preventDefault();
 
-    const newFeedback = {
+    const newFeedback: FeedbackData = {
       author: auth.user.name,
       authorId: auth.user.uid,
-      siteId: router.query?.siteId,
+      siteId: router.query?.siteId as string,
       text: inputElement.current.value,
       createdAt: new Date().toISOString(),
       provider: auth.user.provider,
