@@ -53,15 +53,26 @@ export async function getUserSites(uid: string): Promise<Sites> {
 }
 
 export async function getAllFeedback(
-  siteId: string
+  siteId: string,
+  route?: string
 ): Promise<{ feedback: FeedbackData[]; error: Error }> {
   try {
     let feedback = [];
-    const q = query(
+    let q = query(
       feedbackRef,
       where("siteId", "==", siteId),
       where("status", "==", "active")
     );
+
+    if (route) {
+      q = query(
+        feedbackRef,
+        where("siteId", "==", siteId),
+        where("status", "==", "active"),
+        where("route", "==", route)
+      );
+    }
+
     const snap = await getDocs(q);
 
     snap.forEach((doc) => {

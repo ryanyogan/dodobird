@@ -1,6 +1,7 @@
-import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { Box, Button, FormControl, Textarea } from "@chakra-ui/react";
 import DashboardShell from "components/DashboardShell";
 import Feedback from "components/Feedback";
+import LoginButtons from "components/LoginButtons";
 import SiteHeader from "components/SiteHeader";
 import { useAuth } from "lib/auth";
 import { createFeedback } from "lib/db";
@@ -13,7 +14,7 @@ import { FeedbackData } from "utils/types";
 export default function FeedbackPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const inputElement = useRef<HTMLInputElement | null>(null);
+  const inputElement = useRef<HTMLTextAreaElement | null>(null);
   const siteAndRoute = router.query?.site;
   const siteId = siteAndRoute ? siteAndRoute[0] : null;
   const route = siteAndRoute ? siteAndRoute[1] : null;
@@ -52,31 +53,49 @@ export default function FeedbackPage() {
     );
   };
 
+  const LoginOrLeaveFeedback = () =>
+    user ? (
+      <Button
+        type="submit"
+        isDisabled={!siteData || !feedbackData}
+        backgroundColor="gray.900"
+        color="white"
+        fontWeight="medium"
+        mt={4}
+        _hover={{ bg: "gray.700" }}
+        _active={{
+          bg: "gray.800",
+          transform: "scale(0.95)",
+        }}
+      >
+        Leave Feedback
+      </Button>
+    ) : (
+      <LoginButtons />
+    );
+
   return (
     <DashboardShell>
-      <SiteHeader site={site} siteId={siteId} route={route} />
-      <Box
-        display="flex"
-        flexDir="column"
-        width="full"
-        maxWidth="700px"
-        margin="0 auto"
-      >
-        {user && (
-          <Box as="form" onSubmit={onSubmit}>
-            <FormControl my={8}>
-              <FormLabel htmlFor="comment">Feedback</FormLabel>
-              <Input
-                ref={inputElement}
-                id="comment"
-                placeholder="Leave a comment"
-              />
-              <Button mt={4} type="submit" fontWeight="medium">
-                Add Feedback
-              </Button>
-            </FormControl>
-          </Box>
-        )}
+      <SiteHeader
+        isSiteOwner={site?.authorId === user?.uid}
+        site={site}
+        siteId={siteId}
+        route={route}
+      />
+      <Box display="flex" flexDir="column" width="full" maxWidth="700px" mx={4}>
+        <Box as="form" onSubmit={onSubmit}>
+          <FormControl my={8}>
+            <Textarea
+              ref={inputElement}
+              id="comment"
+              placeholder="Leave a comment"
+              backgroundColor="white"
+              isDisabled={!user}
+              h="100px"
+            />
+            {!loading && <LoginOrLeaveFeedback />}
+          </FormControl>
+        </Box>
 
         {allFeedback &&
           allFeedback.map((feedback) => (
