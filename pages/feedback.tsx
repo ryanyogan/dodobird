@@ -14,7 +14,6 @@ export default function FeedbackRoute() {
     user?.token ? ["/api/feedback", user?.token] : null,
     fetcher
   );
-  console.log(data);
 
   if (!data) {
     return (

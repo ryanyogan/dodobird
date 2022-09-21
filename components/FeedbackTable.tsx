@@ -9,7 +9,6 @@ export default function FeedbackTable({
 }: {
   feedback: FeedbackData[];
 }) {
-  console.log("In component", feedback);
   return (
     <Box overflowX="scroll">
       <Table w="full">
