@@ -1,6 +1,13 @@
 import { compareDesc, parseISO } from "date-fns";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { FeedbackData, Sites } from "utils/types";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { FeedbackData, Site, Sites } from "utils/types";
 import { firestore } from "./firebase";
 
 const sitesRef = collection(firestore, "sites");
@@ -20,6 +27,13 @@ export async function getAllSites(): Promise<Sites> {
   );
 
   return { sites };
+}
+
+export async function getSite(siteId: string): Promise<Site> {
+  const docRef = doc(firestore, "sites", siteId);
+  const docSnap = await getDoc(docRef);
+
+  return { id: docSnap.id, ...docSnap.data() } as Site;
 }
 
 export async function getUserSites(uid: string): Promise<Sites> {

@@ -15,7 +15,6 @@ export const Th = (props) => (
 export const Td = (props) => (
   <Box
     as="td"
-    fontSize="sm"
     color="gray.900"
     p={4}
     borderBottom="1px solid"

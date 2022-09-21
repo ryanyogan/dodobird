@@ -2,6 +2,7 @@ import { Avatar, Box, Button, Flex, Link } from "@chakra-ui/react";
 import { useAuth } from "lib/auth";
 import NextLink from "next/link";
 import React from "react";
+import Logo from "./Logo";
 
 export default function DashboardShell({
   children,
@@ -31,7 +32,9 @@ export default function DashboardShell({
         >
           <Flex align="center">
             <NextLink href="/" passHref>
-              <Link mr={8}>Icon</Link>
+              <Link mr={8}>
+                <Logo />
+              </Link>
             </NextLink>
             <NextLink href="/sites" passHref>
               <Button
