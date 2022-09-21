@@ -16,6 +16,8 @@ type StatusType = "pending" | "active";
 
 export type FeedbackData = {
   id?: string;
+  route?: string;
+  siteAuthorId?: string;
   author: User["displayName"];
   authorId: User["uid"];
   createdAt: string;
