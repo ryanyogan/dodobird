@@ -41,10 +41,9 @@ export default function Home({
           <Text mb={4} fontSize="lg" py={4}>
             <Text as="span" fontWeight="bold" display="inline">
               Dodo Bird
-            </Text>
-            <br />
-            Want to give the internet some of your ever so qualifed opinion? You
-            can do it quickly and safely here. 🦆
+            </Text>{" "}
+            is a silly place to give the internet some of your ever so qualifed
+            opinion... You can do it quickly and safely here. 🦆
           </Text>
           {auth.user ? (
             <Button
