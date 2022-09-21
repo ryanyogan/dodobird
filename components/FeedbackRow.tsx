@@ -11,6 +11,7 @@ export default function FeedbackRow({
   author,
   text,
   status,
+  route,
 }: FeedbackData) {
   const auth = useAuth();
   const isChecked = status === "active";
@@ -32,7 +33,7 @@ export default function FeedbackRow({
           overflow="hidden"
           display="inherit"
         >
-          /
+          {route || "/"}
         </Code>
       </Td>
       <Td>
