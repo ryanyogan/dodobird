@@ -27,8 +27,8 @@ export default function SiteTable({ sites }: { sites: Site[] }) {
               </Td>
               <Td>
                 <NextLink
-                  href="/site/[siteId]"
-                  as={`/site/${site.id}`}
+                  href="/sites/[siteId]"
+                  as={`/sites/${site.id}`}
                   passHref
                 >
                   <Link color="blue.500" fontWeight="medium">

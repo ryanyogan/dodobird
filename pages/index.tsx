@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import Feedback from "components/Feedback";
 import FeedbackLink from "components/FeedbackLink";
+import Footer from "components/Footer";
 import LoginButtons from "components/LoginButtons";
 import Logo from "components/Logo";
 import { getAllFeedback, getSite } from "lib/db-admin";
@@ -80,6 +81,7 @@ export default function Home({
         {allFeedback.map((feedback) => (
           <Feedback key={feedback.id} {...feedback} />
         ))}
+        <Footer />
       </Box>
     </>
   );
