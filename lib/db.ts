@@ -3,8 +3,12 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
+  query,
   setDoc,
   updateDoc,
+  where,
+  writeBatch,
 } from "firebase/firestore";
 import { FeedbackData, Site } from "utils/types";
 import { FormattedUser } from "./auth";
@@ -32,6 +36,21 @@ export async function createFeedback(data: Omit<FeedbackData, "id">) {
 
 export async function createSite(data: Omit<Site, "id">) {
   return addDoc(siteRef, data);
+}
+
+export async function deleteSite(id: Site["id"]) {
+  const siteRef = doc(firestore, "sites", id);
+  const feedbackRef = collection(firestore, "feedback");
+  const q = query(feedbackRef, where("siteId", "==", id));
+
+  await deleteDoc(siteRef);
+  const snap = await getDocs(q);
+  const batch = writeBatch(firestore);
+  snap.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+
+  return batch.commit();
 }
 
 export async function deleteFeedback(id: string) {

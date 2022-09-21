@@ -2,7 +2,7 @@ import { Box, Link } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
 import { Site } from "utils/types";
-import DeleteFeedbackButton from "./DeleteFeedbackButton";
+import DeleteSiteButton from "./DeleteSiteButton";
 import { Table, Td, Th, Tr } from "./Table";
 
 export default function SiteTable({ sites }: { sites: Site[] }) {
@@ -38,7 +38,7 @@ export default function SiteTable({ sites }: { sites: Site[] }) {
               </Td>
               <Td>{format(parseISO(site.createdAt), "MMM do, yyyy")}</Td>
               <Td>
-                <DeleteFeedbackButton feedbackId={site.id} />
+                <DeleteSiteButton siteId={site.id} />
               </Td>
             </Box>
           ))}
