@@ -6,10 +6,15 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   Button,
+  useToast,
 } from "@chakra-ui/react";
+import { useAuth } from "lib/auth";
+import { deleteFeedback } from "lib/db";
 import { useRef, useState } from "react";
 
 import { AiFillDelete } from "react-icons/ai";
+import { mutate } from "swr";
+import { FeedbackData } from "utils/types";
 
 export default function DeleteFeedbackButton({
   feedbackId,
@@ -18,16 +23,42 @@ export default function DeleteFeedbackButton({
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const cancelRef = useRef();
+  const toast = useToast();
+  const auth = useAuth();
 
   const onClose = () => setIsOpen(false);
 
   const onDelete = () => {
+    deleteFeedback(feedbackId);
+    mutate(
+      ["/api/feedback", auth.user.token],
+      async (data: any) => {
+        return {
+          feedback: data.feedback.filter(
+            (feedback: FeedbackData) => feedback.id !== feedbackId
+          ),
+        };
+      },
+      false
+    );
     onClose();
+
+    toast({
+      title: "Success!",
+      description: "Post Deleted",
+      status: "success",
+      duration: 5_000,
+      isClosable: true,
+    });
   };
 
   return (
     <>
-      <Button aria-label="Delete feedback" variant="ghost">
+      <Button
+        onClick={() => setIsOpen(true)}
+        aria-label="Delete feedback"
+        variant="ghost"
+      >
         <AiFillDelete />
       </Button>
       <AlertDialog
