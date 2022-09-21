@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import Feedback from "components/Feedback";
+import "iframe-resizer/js/iframeResizer.contentWindow";
 import { getAllFeedback, getAllSites } from "lib/db-admin";
 
 export async function getStaticProps(context) {
